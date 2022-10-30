@@ -109,9 +109,10 @@ const Template = function(poolConfig, rpcData, jobId, extraNoncePlaceholder, aux
     let buffer;
     switch (algorithm) {
 
-    // Kawpow/Firopow Block Header
+    // Kawpow/Firopow/Evrprogpow Block Header
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
       buffer = Buffer.concat([
         _this.generation[0],
         extraNonce1,
@@ -138,9 +139,10 @@ const Template = function(poolConfig, rpcData, jobId, extraNoncePlaceholder, aux
     let position = 0;
     switch (algorithm) {
 
-    // Kawpow/Firopow Block Header
+    // Kawpow/Firopow/Evrprogpow Block Header
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
       header.write(utils.packUInt32BE(this.rpcData.height).toString('hex'), position, 4, 'hex');
       header.write(this.rpcData.bits, position += 4, 4, 'hex');
       header.write(nTime, position += 4, 4, 'hex');
@@ -169,9 +171,10 @@ const Template = function(poolConfig, rpcData, jobId, extraNoncePlaceholder, aux
     let buffer;
     switch (algorithm) {
 
-    // Kawpow/Firopow Block Structure
+    // Kawpow/Firopow/evrprogpow Block Structure
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
       buffer = Buffer.concat([
         header,
         nonce,
@@ -225,9 +228,10 @@ const Template = function(poolConfig, rpcData, jobId, extraNoncePlaceholder, aux
     // Process Job Parameters
     switch (algorithm) {
 
-    // Kawpow/Firopow Parameters
+    // Kawpow/Firopow/evrprogpow Parameters
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
 
       // Check if Client has ExtraNonce Set
       if (!client.extraNonce1) {

@@ -22,12 +22,12 @@ const Manager = function(poolConfig, portalConfig) {
 
   const algorithm = _this.poolConfig.primary.coin.algorithms.mining;
   const shareMultiplier = Algorithms[algorithm].multiplier;
-  const extraNonceSize = ['kawpow', 'firopow'].includes(algorithm) ? 2 : 4;
+  const extraNonceSize = ['kawpow', 'firopow', 'evrprogpow'].includes(algorithm) ? 2 : 4;
 
   this.currentJob;
   this.validJobs = {};
   this.jobCounter = utils.jobCounter();
-  this.extraNoncePlaceholder = ['kawpow', 'firopow'].includes(algorithm) ? Buffer.from('f000', 'hex') : Buffer.from('f000000ff111111f', 'hex');
+  this.extraNoncePlaceholder = ['kawpow', 'firopow', 'evrprogpow'].includes(algorithm) ? Buffer.from('f000', 'hex') : Buffer.from('f000000ff111111f', 'hex');
   this.extraNonceCounter = utils.extraNonceCounter(extraNonceSize);
   this.extraNonce2Size = _this.extraNoncePlaceholder.length - _this.extraNonceCounter.size;
 
@@ -131,9 +131,10 @@ const Manager = function(poolConfig, portalConfig) {
     /* istanbul ignore next */
     switch (algorithm) {
 
-    // Kawpow/Firopow Share Submission
+    // Kawpow/Firopow/Evrprogpow Share Submission
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
 
       // Edge Cases to Check if Share is Invalid
       submitTime = Date.now() / 1000 | 0;
@@ -205,7 +206,7 @@ const Manager = function(poolConfig, portalConfig) {
       blockDiffAdjusted = job.difficulty * shareMultiplier;
       blockHex = job.serializeBlock(headerBuffer, coinbaseBuffer, nonceBuffer, mixHashBuffer).toString('hex');
 
-      // Generate Output Block Hash
+      // Generate Output Block Hash / Seal?
       if (algorithm === 'firopow') {
         combinedBuffer = Buffer.alloc(120);
         headerBuffer.copy(combinedBuffer);

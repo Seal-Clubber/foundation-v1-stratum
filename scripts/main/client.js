@@ -199,9 +199,10 @@ const Client = function(options) {
   this.handleSubscribe = function(message) {
     switch (_this.options.algorithm) {
 
-    // Kawpow/Firopow Subscription
+    // Kawpow/Firopow/evrprogpow Subscription
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
       _this.emit('subscription', {}, (error, extraNonce1) => {
         if (error) {
           _this.sendJson({ id: message.id, result: null, error: error });
@@ -383,9 +384,10 @@ const Client = function(options) {
     let zeroPad, adjPow;
     switch (_this.options.algorithm) {
 
-    // Kawpow/Firopow Difficulty
+    // Kawpow/Firopow/evrprogpow Difficulty
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
       zeroPad = '';
       adjPow = Algorithms[_this.options.algorithm].diff / _this.difficulty;
       if ((64 - adjPow.toString(16).length) !== 0) {
@@ -437,9 +439,10 @@ const Client = function(options) {
     let zeroPad, adjPow;
     switch (_this.options.algorithm) {
 
-    // Kawpow/Firopow Broadcasting
+    // Kawpow/Firopow/evrprogpow Broadcasting
     case 'kawpow':
     case 'firopow':
+    case 'evrprogpow':
       zeroPad = '';
       adjPow = Algorithms[_this.options.algorithm].diff / _this.difficulty;
       if ((64 - adjPow.toString(16).length) !== 0) {
