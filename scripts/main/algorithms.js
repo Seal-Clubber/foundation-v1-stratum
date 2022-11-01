@@ -62,7 +62,7 @@ const Algorithms = {
   // Evrprogpow Algorithm
   'evrprogpow': {
     multiplier: 1,
-    diff: parseInt('0x000000ffff000000000000000000000000000000000000000000000000000000'),
+    diff: parseInt('0x00000000ff000000000000000000000000000000000000000000000000000000'),
     epochLength: 12000,
     hash: function() {
       return function() {
