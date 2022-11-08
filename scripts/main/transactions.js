@@ -224,17 +224,15 @@ const Transactions = function() {
 
     // EVRMORE-Based Transactions
     case 'evrmore':
-      poolConfig.primary.coin.rewards.addresses.forEach((address) => {
-        founderReward = rpcData.coinbasevalue * 0.1;
-        founderScript = utils.addressToScript(address.address, network);
-        reward -= founderReward;
-        rewardToPool -= founderReward;
-        txOutputBuffers.push(Buffer.concat([
-          utils.packUInt64LE(founderReward),
-          utils.varIntBuffer(founderScript.length),
-          founderScript,
-        ]));
-      });
+      founderReward = rpcData.coinbasetxn.minerdevfund.minimumvalue;
+      founderScript = utils.addressToScript(rpcData.coinbasetxn.minerdevfund.addresses[poolConfig.primary.coin.rewards.minerdevfund], network);
+      reward -= founderReward;
+      rewardToPool -= founderReward;
+      txOutputBuffers.push(Buffer.concat([
+        utils.packUInt64LE(founderReward),
+        utils.varIntBuffer(founderScript.length),
+        founderScript,
+      ]));
       break;
 
     // HVQ-Based Transactions
